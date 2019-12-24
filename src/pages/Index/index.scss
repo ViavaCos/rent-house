@@ -1,0 +1,67 @@
+/* 导航菜单区域 */
+.home-menu {
+    background-color: #fff;
+    padding-top: 10px;
+}
+
+.home-menu .am-flexbox-item {
+    text-align: center;
+}
+
+.home-menu img {
+    height: 48px;
+}
+
+.home-menu p {
+    margin-top: 7px;
+    font-size: 13px;
+}
+
+/* 租房小组标题 */
+.group {
+    overflow: hidden;
+    padding: 0 10px;
+    background-color: #f6f5f6;
+    &-title {
+        margin: 15px 0 15px 0;
+        h3 {
+            font-size: 15px;
+        }
+        span {
+            font-size: 14px;
+            color: #787d82;
+        }
+    }
+}
+
+/* 租房小组内容 */
+.group {
+    // 宫格
+    .am-flexbox {
+        margin-bottom: 10px;
+        background-color: transparent;
+        .am-grid-item {
+            margin-right: 0;
+            background-color: #fff;
+            &:first-child {
+                margin-left: 10px;
+            }
+        }
+    }
+    .grid-item {
+        padding: 0 13px;
+        .desc {
+            h3 {
+                margin-bottom: 5px;
+                font-size: 13px;
+            }
+            p {
+                color: #999;
+                font-size: 12px;
+            }
+        }
+        img {
+            width: 55px;
+        }
+    }
+}
