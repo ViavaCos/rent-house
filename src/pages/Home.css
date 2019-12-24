@@ -1,5 +1,11 @@
-.menu .am-tab-bar {
+/* .menu .am-tab-bar {
     position: fixed;
     width: 100%;
     bottom: 0;
-}
+} */
+
+.menu .am-tabs-tab-bar-wrap {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+  }
