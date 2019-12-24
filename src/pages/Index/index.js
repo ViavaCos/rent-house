@@ -5,6 +5,7 @@ import { Carousel, Flex, WingBlank, Grid } from 'antd-mobile';
 // import axios from 'axios'
 import http from '../../api/index'
 import './index.scss'
+// 导入图片基准地址
 import { BASE_IMG_URL } from '../../utils/index'
 
 import img1 from '../../assets/images/nav-1.png'
@@ -25,11 +26,14 @@ class Index extends React.Component {
             { title: '去出租', imgPath: img4 },
         ],
         // 租房小组数据
-        groupsData: []
+        groupsData: [],
+        // 最新资讯数据
+        newsData: []
     }
     componentDidMount () {
         this.getCarouselData()
         this.getGroupsData()
+        this.getNewsData()
     }
 
     // 获取轮播图数据
@@ -51,6 +55,14 @@ class Index extends React.Component {
             groupsData: res.body
         })
     }
+    // 获取最新资讯数据
+    getNewsData = async () => {
+        const res = await http.get('/home/news');
+        console.log(res);
+        this.setState({
+            newsData: res.body
+        })
+    }
 
     // 渲染导航列表
     renderNav = () => {
@@ -59,6 +71,27 @@ class Index extends React.Component {
                 <img src={item.imgPath} alt="图片无法显示" />
                 <p>{item.title}</p>
             </Flex.Item>
+        ))
+    }
+    // 渲染最新资讯
+    renderNews = () => {
+        return this.state.newsData.map(item => (
+            <div className="news-item" key={item.id}>
+                <div className="imgwrap">
+                    <img
+                        className="img"
+                        src={`http://localhost:8080${item.imgSrc}`}
+                        alt=""
+                    />
+                </div>
+                <Flex className="content" direction="column" justify="between">
+                    <h3 className="title">{item.title}</h3>
+                    <Flex className="info" justify="between">
+                        <span>{item.from}</span>
+                        <span>{item.date}</span>
+                    </Flex>
+                </Flex>
+            </div>
         ))
     }
 
@@ -129,6 +162,12 @@ class Index extends React.Component {
                         )
                     }}
                 />
+
+                {/* 最新资讯 */}
+                <div className="news">
+                    <h3 className="group-title">最新资讯</h3>
+                    <WingBlank size="md">{this.renderNews()}</WingBlank>
+                </div>
             </div>
         );
     }
