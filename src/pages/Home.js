@@ -1,15 +1,20 @@
 // 主页组件
-import React from 'react'
+import React from 'react';
 
 import { TabBar } from 'antd-mobile';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import './Home.css';
+
+import Index from './Index/index'
+import Find from './Find/index'
+import News from './News/index'
+import Mine from './Mine/index'
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedTab: 'redTab',
-            hidden: false,
-            fullScreen: true,
+            selectedTab: 'index',
             tabBarData: [
                 {
                     title: "主页",
@@ -19,28 +24,19 @@ class Home extends React.Component {
                 {
                     title: "找房",
                     key: 'find',
-                    icon: 'icon-ind'
+                    icon: 'icon-findHouse'
                 },
                 {
                     title: "资讯",
                     key: 'news',
-                    icon: 'icon-ind'
+                    icon: 'icon-infom'
                 }, {
                     title: "我的",
                     key: 'mine',
-                    icon: 'icon-ind'
+                    icon: 'icon-my'
                 }
             ]
         };
-    }
-
-    componentDidMount () {
-        this.getTabBarData()
-    }
-
-    // 获取底部tab栏数据
-    getTabBarData () {
-
     }
 
     // 渲染底部tab栏
@@ -51,25 +47,35 @@ class Home extends React.Component {
                 title={item.title}
                 key={item.key}
                 icon={<i className={`iconfont ${item.icon}`}></i>}
-                selectedIcon={<i className="iconfont icon-ind"></i>}
+                selectedIcon={<i className={`iconfont ${item.icon}`}></i>}
                 selected={this.state.selectedTab === item.key}
                 onPress={() => {
                     this.setState({
                         selectedTab: item.key,
                     });
+                    // console.log(this.props)
+                    this.props.history.push(`/home/${item.key}`)
                 }}
                 data-seed="logId"
             >
-                <div>zhu</div>
             </TabBar.Item>
-
         ))
     }
 
     render () {
 
         return (
-            <div style={this.state.fullScreen ? { position: 'fixed', height: '100%', width: '100%', top: 0 } : { height: 400 }}>
+            <div className="menu">
+                {/* 顶部内容区域 */}
+                <Switch>
+                    <Redirect exact from='/home' to='/home/index' />
+                    <Route path="/home/index" component={Index}></Route>
+                    <Route path="/home/find" component={Find}></Route>
+                    <Route path="/home/news" component={News}></Route>
+                    <Route path="/home/mine" component={Mine}></Route>
+                </Switch>
+
+                {/* 底部tab栏区域 */}
                 <TabBar>
                     {this.renderTabBar()}
                 </TabBar>
