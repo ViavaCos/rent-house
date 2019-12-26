@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Carousel 走马灯(轮播图) |  Flex Flex布局  |  WingBlank 两翼留白  |  Grid 宫格    
-import { Carousel, Flex, WingBlank, Grid } from 'antd-mobile';
+import { Carousel, Flex, WingBlank, Grid, NavBar, Icon } from 'antd-mobile';
 // import axios from 'axios'
 import http from '../../api/index'
 import './index.scss'
@@ -28,12 +28,15 @@ class Index extends React.Component {
         // 租房小组数据
         groupsData: [],
         // 最新资讯数据
-        newsData: []
+        newsData: [],
+        // 当前选中城市
+        currentCity: ''
     }
     componentDidMount () {
         this.getCarouselData()
         this.getGroupsData()
         this.getNewsData()
+        this.getCurrentCity()
     }
 
     // 获取轮播图数据
@@ -58,7 +61,7 @@ class Index extends React.Component {
     // 获取最新资讯数据
     getNewsData = async () => {
         const res = await http.get('/home/news');
-        console.log(res);
+        // console.log(res);
         this.setState({
             newsData: res.body
         })
@@ -94,10 +97,33 @@ class Index extends React.Component {
             </div>
         ))
     }
+    // 获取当前选中城市
+    getCurrentCity = () => {
+        // TODO: 如果无当前选择城市，则定位当前城市
+        let currentCity = window.localStorage.getItem('currentCity') || ''
+        if (currentCity) {
+            currentCity = JSON.parse(currentCity).label
+        }
+        this.setState({
+            currentCity
+        })
+    }
 
     render () {
         return (
             <div className="wrapper">
+                {/* 顶部导航栏 */}
+                <div>
+                    <NavBar
+                        mode="dark"
+                        leftContent={this.state.currentCity}
+                        onLeftClick={() => {
+                            this.props.history.push('/city')
+                        }}
+                        rightContent={<Icon key="0" type="search" style={{ marginRight: '5px' }} />}
+                    >首页</NavBar>
+                </div>
+
                 {/* 轮播图区域 */}
                 <Carousel
                     autoplay={true}
