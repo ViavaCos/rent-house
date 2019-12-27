@@ -3,6 +3,7 @@ import { NavBar, Icon, Toast } from 'antd-mobile'
 import http from '../../api/index'
 import './index.scss'
 import { List, AutoSizer } from 'react-virtualized'
+import { getLocation } from '../../utils/index'
 
 class City extends React.Component {
 
@@ -34,9 +35,9 @@ class City extends React.Component {
         listObj.hot = ret.body
 
         firstLetterArr.unshift('#')
-        // TODO：这里的当前城市应该是动态获取的，而不是写死的
-        listObj['#'] = [{ label: "北京" }]
-
+        // 动态获取当前城市信息
+        const city = await getLocation()
+        listObj['#'] = [city]
 
         // console.log(listObj)
         // console.log(firstLetterArr)

@@ -5,8 +5,9 @@ import { Carousel, Flex, WingBlank, Grid, NavBar, Icon } from 'antd-mobile';
 // import axios from 'axios'
 import http from '../../api/index'
 import './index.scss'
-// 导入图片基准地址
-import { BASE_IMG_URL } from '../../utils/index'
+// 导入图片基准地址 | 导入IP获取函数
+import { BASE_IMG_URL, getLocation } from '../../utils/index'
+
 
 import img1 from '../../assets/images/nav-1.png'
 import img2 from '../../assets/images/nav-2.png'
@@ -98,25 +99,24 @@ class Index extends React.Component {
         ))
     }
     // 获取当前选中城市
-    getCurrentCity = () => {
-        // TODO: 如果无当前选择城市，则定位当前城市
-        let currentCity = window.localStorage.getItem('currentCity') || ''
-        if (currentCity) {
-            currentCity = JSON.parse(currentCity).label
-        }
+    getCurrentCity = async () => {
+        const currentCity = await getLocation();
         this.setState({
             currentCity
         })
+        // console.log(currentCity)
     }
 
     render () {
+        // const { currentCity } = this.state
         return (
             <div className="wrapper">
                 {/* 顶部导航栏 */}
                 <div>
                     <NavBar
+                        className="topNav"
                         mode="dark"
-                        leftContent={this.state.currentCity}
+                        leftContent={this.state.currentCity.label}
                         onLeftClick={() => {
                             this.props.history.push('/city')
                         }}

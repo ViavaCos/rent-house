@@ -1,3 +1,15 @@
+.wrapper{
+  padding-top: 45px;
+  padding-bottom: 50px;
+  .topNav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+  }
+
+}
 /* 导航菜单区域 */
 .home-menu {
     background-color: #fff;
