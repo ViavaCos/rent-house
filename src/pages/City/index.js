@@ -13,6 +13,8 @@ class City extends React.Component {
     }
 
     componentDidMount () {
+        // 添加加载中的提示
+        Toast.loading('正在获取...', 0, null, true)
         this.getCityList()
     }
 
@@ -46,6 +48,9 @@ class City extends React.Component {
             cityList: listObj,
             firstLetterArr
         })
+
+        // 取消加载中的提示
+        Toast.hide()
     }
 
     // 选择城市
