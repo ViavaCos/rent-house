@@ -9,7 +9,8 @@ class City extends React.Component {
 
     state = {
         cityList: [],
-        firstLetterArr: []
+        firstLetterArr: [],
+        currentLetterIndex: 0
     }
 
     componentDidMount () {
@@ -121,6 +122,64 @@ class City extends React.Component {
         ))
     }
 
+    // 渲染右侧索引
+    renderRightIndex = () => {
+        const { firstLetterArr, currentLetterIndex } = this.state
+        return firstLetterArr.map((item, index) => (
+            < li className="city-index-item" key={item} >
+                {/* <span className='index-active'>A</span> */}
+                {< span className={currentLetterIndex === index ? 'index-active' : ''} data-index={index}> {item === "hot" ? "热" : item}</span >}
+            </li >
+        ))
+    }
+
+    // 获取当前选中索引字母
+    getCurrentLetterIndex = (e) => {
+        let index = e.target.dataset && parseInt(e.target.dataset.index)
+        // console.log(e.target.dataset && e.target.dataset.index)
+        if (!e.target.dataset.index || index === this.state.currentLetterIndex) {
+            return
+        }
+        console.log(index, '+++++++++')
+        // console.log(this.state.firstLetterArr.length - 1, '+++++++++this.state.firstLetterArr.length - 1')
+        if (index === this.state.firstLetterArr.length - 1) {
+            setTimeout(() => {
+                console.log("执行可")
+                this.setState({
+                    currentLetterIndex: index
+                })
+            }, 0)
+        } else {
+            this.setState({
+                currentLetterIndex: index
+            })
+        }
+    }
+
+    // 获取长列表滚动位置
+    getScrollLocation = ({ startIndex }) => {
+        // console.log(overscanStartIndex, overscanStopIndex, startIndex, stopIndex)
+        
+        // if (startIndex === this.state.currentLetterIndex) {
+        //     return
+        // }
+
+        // console.log(startIndex, '滚动事件触发');
+
+        // setTimeout(() => {
+        // this.setState({
+        //     currentLetterIndex: startIndex
+        // })
+        // }, 1000)
+
+        if (startIndex !== this.state.currentLetterIndex) {
+            // console.log(startIndex, this.state.currentLetterIndex)
+            this.setState({
+                currentLetterIndex: startIndex
+            })
+        }
+    }
+
     render () {
         return (
             <div>
@@ -139,7 +198,7 @@ class City extends React.Component {
                         rowRenderer={this.renderCityList}
                     /> */}
                     {/* {this.renderCityList()} */}
-
+                    {/* 自动计算高度 */}
                     <AutoSizer>
                         {({ height, width }) => (
                             // <div>
@@ -153,9 +212,20 @@ class City extends React.Component {
                                 rowHeight={this.calculateHeight}
                                 // rowRenderer={this.renderCityList}
                                 rowRenderer={this.rowRenderer}
+                                // 滚动到指定索引位置
+                                scrollToIndex={this.state.currentLetterIndex}
+                                // 滚动的对齐方式 start:起始位置  center:中间位置  end:结束位置
+                                scrollToAlignment="start"
+                                // onRowsRendered 可以获取长列表滚动的位置  
+                                onRowsRendered={this.getScrollLocation}
                             />
                         )}
                     </AutoSizer>
+
+                    {/* 右侧索引列表 */}
+                    <ul className="city-index" onClick={this.getCurrentLetterIndex}>
+                        {this.renderRightIndex()}
+                    </ul>
                 </div>
             </div>
         )
