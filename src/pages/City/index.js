@@ -140,11 +140,11 @@ class City extends React.Component {
         if (!e.target.dataset.index || index === this.state.currentLetterIndex) {
             return
         }
-        console.log(index, '+++++++++')
+        // console.log(index, '+++++++++')
         // console.log(this.state.firstLetterArr.length - 1, '+++++++++this.state.firstLetterArr.length - 1')
         if (index === this.state.firstLetterArr.length - 1) {
             setTimeout(() => {
-                console.log("执行可")
+                // console.log("执行可")
                 this.setState({
                     currentLetterIndex: index
                 })

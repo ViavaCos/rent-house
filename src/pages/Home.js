@@ -65,7 +65,7 @@ class Home extends React.Component {
     render () {
 
         return (
-            <div className="menu">
+            <div className="Home-menu">
                 {/* 顶部内容区域 */}
                 <Switch>
                     <Redirect exact from='/home' to='/home/index' />
