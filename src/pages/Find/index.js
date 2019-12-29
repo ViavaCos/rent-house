@@ -17,6 +17,7 @@ class Find extends React.Component {
         ]
     }
 
+    // 获取城市列表
     getCity = async () => {
         const res = await getLocation()
         // console.log(res);

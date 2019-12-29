@@ -14,11 +14,12 @@ export default function FilterTitle (props) {
     { title: '租金', type: 'price' },
     { title: '筛选', type: 'more' }
   ]
+  // console.log("isHeighLight: ", props.isHeighLight);
 
   let res = titleList.map(item => (
     <Flex.Item key={item.type}>
       {/* 选中类名： selected */}
-      <span onClick={() => { props.handleClick(item.type) }} className={[styles.dropdown, props.isHeighLight === item.type ? styles.selected : ''].join(' ')}>
+      <span onClick={() => { props.handleClick(item.type) }} className={[styles.dropdown, props.isHeighLight[item.type] ? styles.selected : ''].join(' ')}>
         <span>{item.title}</span>
         <i className="iconfont icon-arrow" />
       </span>
